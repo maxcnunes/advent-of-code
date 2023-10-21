@@ -69,23 +69,25 @@ struct Play {
     points: u32,
 }
 
-fn build_play(choice: Choice) -> Play {
-    match choice {
-        Choice::Rock => Play {
-            choice: Choice::Rock,
-            beats: Choice::Scissors,
-            points: 1,
-        },
-        Choice::Paper => Play {
-            choice: Choice::Paper,
-            beats: Choice::Rock,
-            points: 2,
-        },
-        Choice::Scissors => Play {
-            choice: Choice::Scissors,
-            beats: Choice::Paper,
-            points: 3,
-        },
+impl Play {
+    pub fn new(choice: Choice) -> Play {
+        match choice {
+            Choice::Rock => Play {
+                choice: Choice::Rock,
+                beats: Choice::Scissors,
+                points: 1,
+            },
+            Choice::Paper => Play {
+                choice: Choice::Paper,
+                beats: Choice::Rock,
+                points: 2,
+            },
+            Choice::Scissors => Play {
+                choice: Choice::Scissors,
+                beats: Choice::Paper,
+                points: 3,
+            },
+        }
     }
 }
 
@@ -93,17 +95,17 @@ fn build_play(choice: Choice) -> Play {
 fn parse_round(round: &Vec<&str>) -> (Play, Play) {
     // First column: A for Rock, B for Paper, and C for Scissors.
     let first = match round[0] {
-        "A" => build_play(Choice::Rock),
-        "B" => build_play(Choice::Paper),
-        "C" => build_play(Choice::Scissors),
+        "A" => Play::new(Choice::Rock),
+        "B" => Play::new(Choice::Paper),
+        "C" => Play::new(Choice::Scissors),
         _ => panic!("Invalid option"),
     };
 
     // Second column: X for Rock, Y for Paper, and Z for Scissors.
     let second = match round[1] {
-        "X" => build_play(Choice::Rock),
-        "Y" => build_play(Choice::Paper),
-        "Z" => build_play(Choice::Scissors),
+        "X" => Play::new(Choice::Rock),
+        "Y" => Play::new(Choice::Paper),
+        "Z" => Play::new(Choice::Scissors),
         _ => panic!("Invalid option"),
     };
 
