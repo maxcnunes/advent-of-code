@@ -75,6 +75,13 @@ enum GameOption {
     Scissors,
 }
 
+#[derive(Debug)]
+enum Result {
+    Lost,
+    Draw,
+    Won,
+}
+
 // TODO: convert to Result
 fn parse_round(round: &Vec<&str>) -> (GameOption, GameOption) {
     // First column: A for Rock, B for Paper, and C for Scissors.
@@ -85,12 +92,29 @@ fn parse_round(round: &Vec<&str>) -> (GameOption, GameOption) {
         _ => panic!("Invalid option"),
     };
 
-    // Second column: X for Rock, Y for Paper, and Z for Scissors.
-    let second = match round[1] {
-        "X" => GameOption::Rock,
-        "Y" => GameOption::Paper,
-        "Z" => GameOption::Scissors,
+    // Second column:
+    //  X means you need to lose,
+    //  Y means you need to end the round in a draw,
+    //  and Z means you need to win
+    let second_expected_result = match round[1] {
+        "X" => Result::Lost,
+        "Y" => Result::Draw,
+        "Z" => Result::Won,
         _ => panic!("Invalid option"),
+    };
+
+    let second = match (&first, second_expected_result) {
+        (GameOption::Rock, Result::Lost) => GameOption::Scissors,
+        (GameOption::Rock, Result::Draw) => GameOption::Rock,
+        (GameOption::Rock, Result::Won) => GameOption::Paper,
+
+        (GameOption::Paper, Result::Lost) => GameOption::Rock,
+        (GameOption::Paper, Result::Draw) => GameOption::Paper,
+        (GameOption::Paper, Result::Won) => GameOption::Scissors,
+
+        (GameOption::Scissors, Result::Lost) => GameOption::Paper,
+        (GameOption::Scissors, Result::Draw) => GameOption::Scissors,
+        (GameOption::Scissors, Result::Won) => GameOption::Rock,
     };
 
     (first, second)
