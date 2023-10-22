@@ -1,15 +1,12 @@
-use std::env;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-fn main() {
-    let file_name = match env::var("DEMO") {
-        Ok(_) => "demo-input.txt",
-        Err(_) => "input.txt",
+pub fn process(demo: bool) {
+    let file_name = match demo {
+        true => "src/day01/demo-input.txt",
+        false => "src/day01/input.txt",
     };
-
-    println!("Using input data {}", file_name);
 
     let lines = read_lines(file_name).unwrap();
 
