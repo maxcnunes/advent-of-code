@@ -70,7 +70,7 @@ struct Play {
 }
 
 impl Play {
-    pub fn new(choice: Choice) -> Play {
+    fn new(choice: Choice) -> Play {
         match choice {
             Choice::Rock => Play {
                 choice: Choice::Rock,
