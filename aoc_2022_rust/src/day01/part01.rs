@@ -1,15 +1,9 @@
 use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use std::io::{self};
 
-pub fn process(demo: bool) {
-    let file_name = match demo {
-        true => "src/day01/demo-input.txt",
-        false => "src/day01/input.txt",
-    };
+use crate::error::SolutionError;
 
-    let lines = read_lines(file_name).unwrap();
-
+pub fn process(lines: io::Lines<io::BufReader<File>>) -> std::result::Result<(), SolutionError> {
     let mut elf_most_calories: u8 = 0;
     let mut total_most_calories: u32 = 0;
 
@@ -17,7 +11,7 @@ pub fn process(demo: bool) {
     let mut current_total_calories: u32 = 0;
 
     for line_result in lines {
-        let line = line_result.unwrap();
+        let line = line_result.map_err(SolutionError::GetLineErr)?;
 
         if line == "" {
             current_elf += 1;
@@ -25,7 +19,7 @@ pub fn process(demo: bool) {
             continue;
         }
 
-        let calories: u32 = line.parse().unwrap();
+        let calories: u32 = line.parse().map_err(SolutionError::ParseLineErr)?;
         current_total_calories += calories;
 
         if current_total_calories > total_most_calories {
@@ -38,14 +32,6 @@ pub fn process(demo: bool) {
         "The elf {} is carrying the most calories {}.",
         elf_most_calories, total_most_calories
     );
-}
 
-// Uses a buffer and iterator to read a file instead of loading the whole
-// file in memory at once.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
+    Ok(())
 }

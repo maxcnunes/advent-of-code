@@ -1,20 +1,15 @@
 use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use std::io::{self};
 
-pub fn process(demo: bool) {
-    let file_name = match demo {
-        true => "src/day02/demo-input.txt",
-        false => "src/day02/input.txt",
-    };
+use crate::error::SolutionError;
+use crate::icon;
 
-    let lines = read_lines(file_name).unwrap();
-
+pub fn process(lines: io::Lines<io::BufReader<File>>) -> std::result::Result<(), SolutionError> {
     let mut first_user_score: u32 = 0;
     let mut second_user_score: u32 = 0;
 
     for line_result in lines {
-        let line = line_result.unwrap();
+        let line = line_result.map_err(SolutionError::GetLineErr)?;
 
         let round: Vec<&str> = line.split(' ').collect();
 
@@ -47,9 +42,11 @@ pub fn process(demo: bool) {
         second_user_score += second_value;
     }
 
-    println!("Final result:");
+    println!("{} Final result:", icon::CHECK_MARK);
     println!("  - first user got {} points", first_user_score);
     println!("  - second user got {} points", second_user_score);
+
+    Ok(())
 }
 
 #[derive(Copy, Clone, PartialEq)]
@@ -107,14 +104,4 @@ fn parse_round(round: &Vec<&str>) -> (Play, Play) {
     };
 
     (first, second)
-}
-
-// Uses a buffer and iterator to read a file instead of loading the whole
-// file in memory at once.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }
