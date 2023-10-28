@@ -73,6 +73,7 @@ fn main() {
     let solutions = vec![
         // Day 1
         Solution::new(1, 1, 1, day01::part01::process),
+        Solution::new(1, 2, 1, day01::part02::process),
         // Day 2
         Solution::new(2, 1, 1, day02::part01::process),
         Solution::new(2, 1, 2, day02::part01_v2::process),
