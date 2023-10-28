@@ -7,4 +7,8 @@ pub enum SolutionError {
     ParseLineErr(ParseIntError),
     CharNotFoundErr(char),
     CouldNotFindPriorityErr,
+    CouldNotSplitByCommaErr,
+    CouldNotSplitByDashErr,
+    CouldNotParseSectionStartValueErr(ParseIntError),
+    CouldNotParseSectionEndValueErr(ParseIntError),
 }
