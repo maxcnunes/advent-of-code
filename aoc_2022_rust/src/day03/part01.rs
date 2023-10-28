@@ -7,14 +7,14 @@ use crate::icon;
 // Find the item type that appears in both compartments of each rucksack.
 // What is the sum of the priorities of those item types?
 pub fn process(lines: io::Lines<io::BufReader<File>>) -> std::result::Result<(), SolutionError> {
-    let total = cal_priorities(lines)?;
+    let total = calc_priorities(lines)?;
 
     println!("{} Total number of priorities: {}", icon::CHECK_MARK, total);
 
     Ok(())
 }
 
-fn cal_priorities(lines: io::Lines<io::BufReader<File>>) -> Result<usize, SolutionError> {
+fn calc_priorities(lines: io::Lines<io::BufReader<File>>) -> Result<usize, SolutionError> {
     let mut total: usize = 0;
 
     for line_result in lines {
@@ -80,7 +80,7 @@ mod tests {
         // 6. 19 (s)
         // the sum of these is 157.
         let lines = input::load(3, true)?;
-        let total = cal_priorities(lines)?;
+        let total = calc_priorities(lines)?;
         assert_eq!(total, 157);
         Ok(())
     }
@@ -88,7 +88,7 @@ mod tests {
     #[test]
     fn real_result_ok() -> Result<(), SolutionError> {
         let lines = input::load(3, false)?;
-        let total = cal_priorities(lines)?;
+        let total = calc_priorities(lines)?;
         assert_eq!(total, 7674);
         Ok(())
     }
