@@ -79,6 +79,7 @@ fn main() {
         Solution::new(2, 2, 1, day02::part02::process),
         // Day 3
         Solution::new(3, 1, 1, day03::part01::process),
+        Solution::new(3, 2, 1, day03::part02::process),
     ];
 
     if args.day != 0 {
