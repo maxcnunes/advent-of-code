@@ -1,8 +1,7 @@
 use clap::Parser;
 use error::SolutionError;
 use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use std::io::{self};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -20,10 +19,15 @@ struct Args {
     demo: bool,
 }
 
-mod day01;
-mod day02;
+// project mods
 mod error;
 mod icon;
+mod input;
+
+// days mods
+mod day01;
+mod day02;
+mod day03;
 
 struct Solution {
     day: u8,
@@ -57,19 +61,7 @@ impl Solution {
             demo
         );
 
-        let day_prefix = match self.day < 10 {
-            true => "0",
-            false => "",
-        };
-
-        let day_label = format!("{}{}", day_prefix, self.day);
-
-        let file_name = match demo {
-            true => format!("src/day{}/demo-input.txt", day_label),
-            false => format!("src/day{}/demo-input.txt", day_label),
-        };
-
-        let lines = read_lines(file_name).map_err(SolutionError::ReadFileErr)?;
+        let lines = input::load(self.day, demo)?;
 
         (self.internal_process)(lines)
     }
@@ -79,10 +71,14 @@ fn main() {
     let args = Args::parse();
 
     let solutions = vec![
+        // Day 1
         Solution::new(1, 1, 1, day01::part01::process),
+        // Day 2
         Solution::new(2, 1, 1, day02::part01::process),
         Solution::new(2, 1, 2, day02::part01_v2::process),
         Solution::new(2, 2, 1, day02::part02::process),
+        // Day 3
+        Solution::new(3, 1, 1, day03::part01::process),
     ];
 
     if args.day != 0 {
@@ -100,15 +96,4 @@ fn main() {
     for s in solutions {
         s.run(args.demo).unwrap();
     }
-}
-
-// Uses a buffer and iterator to read a file instead of loading the whole
-// file in memory at once.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    // println!("Reading file {:?}", filename);
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

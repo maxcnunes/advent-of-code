@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{self};
 
 use crate::error::SolutionError;
+use crate::icon;
 
 pub fn process(lines: io::Lines<io::BufReader<File>>) -> std::result::Result<(), SolutionError> {
     let mut elf_most_calories: u8 = 0;
@@ -29,8 +30,10 @@ pub fn process(lines: io::Lines<io::BufReader<File>>) -> std::result::Result<(),
     }
 
     println!(
-        "The elf {} is carrying the most calories {}.",
-        elf_most_calories, total_most_calories
+        "{} The elf {} is carrying the most calories {}.",
+        icon::CHECK_MARK,
+        elf_most_calories,
+        total_most_calories
     );
 
     Ok(())
