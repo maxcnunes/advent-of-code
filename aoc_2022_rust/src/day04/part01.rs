@@ -28,6 +28,8 @@ fn calc_total_overlaps(lines: io::Lines<io::BufReader<File>>) -> Result<usize, S
     Ok(total)
 }
 
+// check if there is a full overlapping where one section
+// contains the other.
 fn is_overlapping(line: String) -> Result<bool, SolutionError> {
     let parts = line
         .split_once(",")
