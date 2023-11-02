@@ -29,6 +29,7 @@ mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day05;
 
 struct Solution {
     day: u8,
@@ -85,6 +86,8 @@ fn main() {
         // Day 4
         Solution::new(4, 1, 1, day04::part01::process),
         Solution::new(4, 2, 1, day04::part02::process),
+        // Day 5
+        Solution::new(5, 1, 1, day05::part01::process),
     ];
 
     if args.day != 0 {
