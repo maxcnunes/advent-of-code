@@ -1,10 +1,7 @@
-use std::fs::File;
-use std::io::{self, BufRead};
+pub fn process() {
+    let input = include_str!("./input.txt");
 
-fn main() {
-    let lines = load_file(false);
-
-    let total = resolve_total_calibrations(lines);
+    let total = resolve_total_calibrations(input);
 
     println!(
         "Day 01, Part 01: The sum of all of the calibration values: {}",
@@ -12,18 +9,16 @@ fn main() {
     );
 }
 
-fn resolve_total_calibrations(lines: io::Lines<io::BufReader<File>>) -> usize {
-    let calibrations = resolve_calibrations(lines);
+fn resolve_total_calibrations(input: &str) -> usize {
+    let calibrations = resolve_calibrations(input);
 
     calibrations.iter().fold(0, |acc, n| acc + n)
 }
 
-fn resolve_calibrations(lines: io::Lines<io::BufReader<File>>) -> Vec<usize> {
+fn resolve_calibrations(input: &str) -> Vec<usize> {
     let mut calibrations: Vec<usize> = vec![];
 
-    for line_result in lines {
-        let line = line_result.unwrap();
-
+    for line in input.lines() {
         // Get first num
         let mut first_num: Option<usize> = None;
         for c in line.chars() {
@@ -60,38 +55,31 @@ fn resolve_calibrations(lines: io::Lines<io::BufReader<File>>) -> Vec<usize> {
     calibrations
 }
 
-pub fn load_file(demo: bool) -> io::Lines<io::BufReader<File>> {
-    let filename = match demo {
-        true => "src/bin/day01/part01/input-demo.txt",
-        false => "src/bin/day01/part01/input.txt",
-    };
-
-    let file = File::open(filename).expect("Could not load input file");
-    io::BufReader::new(file).lines()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[test]
-    fn demo_result_ok() {
-        let lines = load_file(true);
-        let total = resolve_total_calibrations(lines);
-        assert_eq!(total, 142);
-    }
+    const INPUT_DEMO: &str = r#"1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet"#;
 
     #[test]
     fn real_result_ok() {
-        let lines = load_file(false);
+        let lines = include_str!("./input.txt");
         let total = resolve_total_calibrations(lines);
         assert_eq!(total, 54632);
     }
 
     #[test]
+    fn demo_result_ok() {
+        let total = resolve_total_calibrations(INPUT_DEMO);
+        assert_eq!(total, 142);
+    }
+
+    #[test]
     fn demo_calibrations_ok() {
-        let lines = load_file(true);
-        let calibrations = resolve_calibrations(lines);
+        let calibrations = resolve_calibrations(INPUT_DEMO);
         assert_eq!(calibrations, vec![12, 38, 15, 77]);
     }
 }
