@@ -51,7 +51,9 @@ fn resolve_calibrations(input: &str) -> Vec<usize> {
         let calibration_str = first_num.expect("missing first value").to_string()
             + &last_num.expect("missing last value").to_string();
 
-        let calibration = calibration_str.parse::<usize>().unwrap();
+        let calibration = calibration_str
+            .parse::<usize>()
+            .expect("could not parse value");
 
         calibrations.push(calibration);
     }
@@ -60,30 +62,18 @@ fn resolve_calibrations(input: &str) -> Vec<usize> {
 }
 
 fn get_word_value_from_text(text: &String) -> Option<u32> {
-    let words = vec![
-        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-    ];
-
-    words.iter().find_map(|&w| -> Option<u32> {
-        if !text.contains(&w) {
-            return None;
-        }
-
-        let num = match w {
-            "one" => 1,
-            "two" => 2,
-            "three" => 3,
-            "four" => 4,
-            "five" => 5,
-            "six" => 6,
-            "seven" => 7,
-            "eight" => 8,
-            "nine" => 9,
-            _ => panic!("Invalid word: {w}"),
-        };
-
-        Some(num)
-    })
+    match text {
+        t if t.contains("one") => Some(1),
+        t if t.contains("two") => Some(2),
+        t if t.contains("three") => Some(3),
+        t if t.contains("four") => Some(4),
+        t if t.contains("five") => Some(5),
+        t if t.contains("six") => Some(6),
+        t if t.contains("seven") => Some(7),
+        t if t.contains("eight") => Some(8),
+        t if t.contains("nine") => Some(9),
+        _ => None,
+    }
 }
 
 #[cfg(test)]
