@@ -1,12 +1,7 @@
-pub fn process() {
+pub fn process() -> usize {
     let input = include_str!("./input.txt");
 
-    let total = resolve_total_calibrations(input);
-
-    println!(
-        "Day 01, Part 02: The sum of all of the calibration values: {}",
-        total
-    );
+    resolve_total_calibrations(input)
 }
 
 fn resolve_total_calibrations(input: &str) -> usize {
@@ -93,10 +88,8 @@ zoneight234
 7pqrstsixteen"#;
 
     #[test]
-    fn real_result_ok() {
-        let lines = include_str!("./input.txt");
-        let total = resolve_total_calibrations(lines);
-        assert_eq!(total, 54019);
+    fn test_process() {
+        assert_eq!(process(), 54019);
     }
 
     #[test]
