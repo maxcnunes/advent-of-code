@@ -15,34 +15,23 @@ fn resolve_calibrations(input: &str) -> Vec<usize> {
 
     for line in input.lines() {
         // Get first num
-        let mut first_num: Option<usize> = None;
-        for c in line.chars() {
-            if let Ok(num) = c.to_string().parse::<usize>() {
-                first_num = Some(num);
-                break;
-            }
-        }
-
-        if let None = first_num {
-            panic!("could not find first calibration value");
-        }
+        let first_num = line
+            .chars()
+            .find_map(|c| c.to_digit(10))
+            .expect("could not find first calibration value");
 
         // Get last num
-        let mut last_num: Option<usize> = None;
-        for c in line.chars().rev() {
-            if let Ok(num) = c.to_string().parse::<usize>() {
-                last_num = Some(num);
-                break;
-            }
-        }
+        let last_num = line
+            .chars()
+            .rev()
+            .find_map(|c| c.to_digit(10))
+            .expect("could not find last calibration value");
 
-        if let None = last_num {
-            panic!("could not find last calibration value");
-        }
+        let calibration_str = first_num.to_string() + &last_num.to_string();
 
-        let calibration_str = first_num.unwrap().to_string() + &last_num.unwrap().to_string();
-
-        let calibration = calibration_str.parse::<usize>().unwrap();
+        let calibration = calibration_str
+            .parse::<usize>()
+            .expect("could not parse value");
 
         calibrations.push(calibration);
     }

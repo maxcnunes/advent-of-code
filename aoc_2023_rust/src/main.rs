@@ -3,7 +3,11 @@ use std::env;
 mod day01;
 
 fn main() {
-    println!("Advent of Code 2023");
+    println!("");
+    println!(":::::::::::::::::::::::::::");
+    println!("::: Advent of Code 2023 :::");
+    println!(":::::::::::::::::::::::::::");
+    println!("");
 
     let task = env::args()
         .nth(1)
@@ -15,5 +19,5 @@ fn main() {
         _ => panic!("Invalid task {task}"),
     };
 
-    println!("Result {task}: {result}");
+    println!(" => Result {task}: {result}");
 }
