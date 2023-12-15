@@ -1,6 +1,7 @@
 use std::env;
 
 mod day01;
+mod day02;
 
 fn main() {
     println!("");
@@ -16,6 +17,8 @@ fn main() {
     let result = match task.as_str() {
         "day01_part01" => day01::part01::process(),
         "day01_part02" => day01::part02::process(),
+        "day02_part01" => day02::part01::process(),
+        "day02_part02" => day02::part02::process(),
         _ => panic!("Invalid task {task}"),
     };
 
