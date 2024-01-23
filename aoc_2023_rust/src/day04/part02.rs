@@ -33,7 +33,7 @@ fn dup_cards(winnings: &Vec<Vec<usize>>) -> HashMap<usize, usize> {
         let next_card_id = card_id + 1;
         let end_match = &card_id + n_matches;
 
-        for line in next_card_id..end_match + 1 {
+        for line in next_card_id..=end_match {
             cards.entry(line).and_modify(|n| *n += instances);
         }
     }
