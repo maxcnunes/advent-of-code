@@ -3,6 +3,7 @@ use std::env;
 mod day01;
 mod day02;
 mod day03;
+mod day04;
 
 fn main() {
     println!("");
@@ -22,6 +23,8 @@ fn main() {
         "day02_part02" => day02::part02::process(),
         "day03_part01" => day03::part01::process(),
         "day03_part02" => day03::part02::process(),
+        "day04_part01" => day04::part01::process(),
+        "day04_part02" => day04::part02::process(),
         _ => panic!("Invalid puzzle {puzzle}"),
     };
 
