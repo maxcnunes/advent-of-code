@@ -4,6 +4,7 @@ mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day05;
 
 fn main() {
     println!("");
@@ -25,6 +26,8 @@ fn main() {
         "day03_part02" => day03::part02::process(),
         "day04_part01" => day04::part01::process(),
         "day04_part02" => day04::part02::process(),
+        "day05_part01" => day05::part01::process(),
+        "day05_part02" => day05::part02::process(),
         _ => panic!("Invalid puzzle {puzzle}"),
     };
 
